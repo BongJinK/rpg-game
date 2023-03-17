@@ -1,5 +1,5 @@
 package day04_rpg;
-
+ 
 public class Unit {
 	private String name;
 	private int level;

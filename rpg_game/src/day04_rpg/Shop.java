@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Shop {
 	ArrayList<Item> itemList = new ArrayList<>();
-
+ 
 	public Shop() {
 		Item temp = new Item();
 		temp.setKind(Item.WEAPON);

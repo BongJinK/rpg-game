@@ -1,5 +1,5 @@
 package day04_rpg;
-
+ 
 public class Item {
 	public static final int WEAPON = 1;
 	public static final int ARMOR = 2;

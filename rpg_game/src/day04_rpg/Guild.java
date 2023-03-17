@@ -96,7 +96,7 @@ public class Guild {
 		System.out.printf(" [방어력 : %d]\n", def);
 		System.out.println("길드원을 추가합니다.");
 		System.out.println("=====================================");
-
+ 
 		try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {

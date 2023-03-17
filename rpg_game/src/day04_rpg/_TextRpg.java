@@ -16,7 +16,7 @@ class MainGame {
 		System.out.println("[1.길드관리]\n[2.상점]\n[3.인벤토리]");
 		System.out.println("[4.저장]\n[5.로드]\n[0.종료]");
 	}
-	
+	 
 	public MainGame() {
 		Player player = new Player();
 		Shop shop = new Shop();
