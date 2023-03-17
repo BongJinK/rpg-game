@@ -7,7 +7,7 @@ public class Player {
 	static Guild guild = new Guild();
 	static Inventory inven = new Inventory();
 
-	Player() {
+	public Player() {
 		money = 100000;
 		guild.setGuild();
 	}

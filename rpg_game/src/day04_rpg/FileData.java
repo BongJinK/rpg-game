@@ -8,189 +8,197 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class FileData {
-	void save() throws IOException {
-		FileWriter fout = null;
-		String path = "gameData.txt";
+	private FileWriter fout;
+	private File file;
+	private FileReader reader;
+	private BufferedReader br;
+	private String path;
 
-		fout = new FileWriter(path);
+	public FileData() {
+		this.path = "gameData.txt";
+	}
+
+	public void save() throws IOException {
+		this.fout = new FileWriter(this.path);
 		ArrayList<Unit> temp = Player.getGuildList();
 		String gameData = "";
-		gameData += Player.money;
-		gameData += "\r\n";
-		gameData += temp.size();
-		gameData += "\r\n";
+		gameData += Player.money + "\r\n";
+		gameData += temp.size() + "\r\n";
+
+		// name, level, hp = maxhp, att, def, exp
 		// Unit temp = new Unit("호랑이", 1, 100, 10, 5, 0);
 		for (int i = 0; i < temp.size(); i++) {
-			gameData += temp.get(i).name;
-			gameData += "/";
-			gameData += temp.get(i).level;
-			gameData += "/";
-			gameData += temp.get(i).maxHp;
-			gameData += "/";
-			gameData += temp.get(i).att;
-			gameData += "/";
-			gameData += temp.get(i).def;
-			gameData += "/";
-			gameData += temp.get(i).exp;
-			gameData += "/";
-			gameData += temp.get(i).party;
+			gameData += temp.get(i).getName() + "/";
+			gameData += temp.get(i).getLevel() + "/";
+			gameData += temp.get(i).getMaxHp() + "/";
+			gameData += temp.get(i).getAtt() + "/";
+			gameData += temp.get(i).getDef() + "/";
+			gameData += temp.get(i).getExp() + "/";
+			gameData += temp.get(i).isParty() + "/";
 			gameData += "\r\n";
-			if (temp.get(i).weapon == null) {
-				gameData += temp.get(i).weapon;
-			} else {
-				Item item = temp.get(i).weapon;
-				String weaponData = "";
-				weaponData += item.kind;
-				weaponData += ",";
-				weaponData += item.name;
-				weaponData += ",";
-				weaponData += item.power;
-				weaponData += ",";
-				weaponData += item.price;
-				gameData += weaponData;
 
-			}
-			gameData += "/";
-			if (temp.get(i).armor == null) {
-				gameData += temp.get(i).armor;
-			} else {
-				Item item = temp.get(i).armor;
+			if (temp.get(i).getWeapon() == null)
+				gameData += temp.get(i).getWeapon();
+			else {
+				Item item = temp.get(i).getWeapon();
 				String weaponData = "";
-				weaponData += item.kind;
-				weaponData += ",";
-				weaponData += item.name;
-				weaponData += ",";
-				weaponData += item.power;
-				weaponData += ",";
-				weaponData += item.price;
+				weaponData += item.getKind() + ",";
+				weaponData += item.getName() + ",";
+				weaponData += item.getPower() + ",";
+				weaponData += item.getPrice() + ",";
 				gameData += weaponData;
-
 			}
+
 			gameData += "/";
-			if (temp.get(i).ring == null) {
-				gameData += temp.get(i).ring;
-			} else {
-				Item item = temp.get(i).ring;
+			if (temp.get(i).getArmor() == null)
+				gameData += temp.get(i).getArmor();
+			else {
+				Item item = temp.get(i).getArmor();
 				String weaponData = "";
-				weaponData += item.kind;
-				weaponData += ",";
-				weaponData += item.name;
-				weaponData += ",";
-				weaponData += item.power;
-				weaponData += ",";
-				weaponData += item.price;
+				weaponData += item.getKind() + ",";
+				weaponData += item.getName() + ",";
+				weaponData += item.getPower() + ",";
+				weaponData += item.getPrice() + ",";
+				gameData += weaponData;
+			}
+
+			gameData += "/";
+			if (temp.get(i).getRing() == null)
+				gameData += temp.get(i).getRing();
+			else {
+				Item item = temp.get(i).getRing();
+				String weaponData = "";
+				weaponData += item.getKind() + ",";
+				weaponData += item.getName() + ",";
+				weaponData += item.getPower() + ",";
+				weaponData += item.getPrice() + ",";
 				gameData += weaponData;
 			}
 			gameData += "\r\n";
 		}
+
+		// inventory
 		gameData += Player.getItemSize();
 		gameData += "\r\n";
 		for (int i = 0; i < Player.getItemSize(); i++) {
 			Item item = Player.getItemList().get(i);
 
-			gameData += item.kind;
-			gameData += "/";
-			gameData += item.name;
-			gameData += "/";
-			gameData += item.power;
-			gameData += "/";
-			gameData += item.price;
-			gameData += "\r\n";
+			gameData += item.getKind() + "/";
+			gameData += item.getName() + "/";
+			;
+			gameData += item.getPower() + "/";
+			;
+			gameData += item.getPrice() + "\r\n";
+			;
 		}
+
 		System.out.println(gameData);
-		fout.write(gameData, 0, gameData.length());
-		fout.close();
+		this.fout.write(gameData, 0, gameData.length());
+		this.fout.close();
 
 	}
 
-	void loadData() throws IOException {
-		File file = null;
-		FileReader reader = null;
-		BufferedReader br = null;
-		String path = "gameData.txt";
-		file = new File(path);
-		if (file.exists()) {
-			reader = new FileReader(path);
-			br = new BufferedReader(reader);
-			String money = br.readLine();
-			Player.money = Integer.parseInt(money);
-			System.out.println(Player.money);
-			String guildSize = br.readLine();
-			int size = Integer.parseInt(guildSize);
-			Player.guild.guildList.clear();
-			System.out.println(size);
-			for (int i = 0; i < size; i++) {
-				String unitData = br.readLine();
-				String[] unitArr = unitData.split("/");
-				String name = unitArr[0];
-				int level = Integer.parseInt(unitArr[1]);
-				int maxhp = Integer.parseInt(unitArr[2]);
-				int att = Integer.parseInt(unitArr[3]);
-				int def = Integer.parseInt(unitArr[4]);
-				int exp = Integer.parseInt(unitArr[5]);
-				boolean party = Boolean.parseBoolean(unitArr[6]);
-				Unit temp = new Unit(name, level, maxhp, att, def, exp, party);
-				Player.guild.guildList.add(temp);
-				// ==================== item =======================
-				String itemData = br.readLine();
-				String itemArr[] = itemData.split("/");
-				if (itemArr[0].equals("null")) {
-					Player.getGuildList().get(i).weapon = null;
-				} else {
-					String[] weapon = itemArr[0].split(",");
-					int itemKind = Integer.parseInt(weapon[0]);
-					String itemName = weapon[1];
-					int itemPower = Integer.parseInt(weapon[2]);
-					int itemPrice = Integer.parseInt(weapon[3]);
-					Item item = new Item();
-					item.setItem(itemKind, itemName, itemPower, itemPrice);
-					Player.getGuildList().get(i).weapon = item;
-				}
-				if (itemArr[1].equals("null")) {
-					Player.getGuildList().get(i).armor = null;
-				} else {
-					String[] armor = itemArr[1].split(",");
-					int itemKind = Integer.parseInt(armor[0]);
-					String itemName = armor[1];
-					int itemPower = Integer.parseInt(armor[2]);
-					int itemPrice = Integer.parseInt(armor[3]);
-					Item item = new Item();
-					item.setItem(itemKind, itemName, itemPower, itemPrice);
-					Player.getGuildList().get(i).armor = item;
-				}
-				if (itemArr[2].equals("null")) {
-					Player.getGuildList().get(i).ring = null;
-				} else {
-					String[] ring = itemArr[2].split(",");
-					int itemKind = Integer.parseInt(ring[0]);
-					String itemName = ring[1];
-					int itemPower = Integer.parseInt(ring[2]);
-					int itemPrice = Integer.parseInt(ring[3]);
-					Item item = new Item();
-					item.setItem(itemKind, itemName, itemPower, itemPrice);
-					Player.getGuildList().get(i).ring = item;
-				}
+	public void loadData() throws IOException {
+		this.file = new File(this.path);
 
-			}
-			// ===================== item ============================
-			String invenSize = br.readLine();
-			System.out.println(invenSize);
-			int inSize = Integer.parseInt(invenSize);
+		if (!this.file.exists()) {
+			return;
+		}
 
-			Player.inven.itemList.clear();
-			for (int i = 0; i < inSize; i++) {
-				String invenDate = br.readLine();
-				String[] invenArr = invenDate.split("/");
-				int itemKind = Integer.parseInt(invenArr[0]);
-				String itemName = invenArr[1];
-				int itemPower = Integer.parseInt(invenArr[2]);
-				int itemPrice = Integer.parseInt(invenArr[3]);
+		this.reader = new FileReader(this.path);
+		this.br = new BufferedReader(this.reader);
+
+		String money = this.br.readLine();
+		Player.money = Integer.parseInt(money);
+		System.out.println(Player.money);
+
+		String guildSize = this.br.readLine();
+		int size = Integer.parseInt(guildSize);
+		Player.guild.guildList.clear();
+		System.out.println(size);
+
+		for (int i = 0; i < size; i++) {
+			String unitData = br.readLine();
+			String[] unitArr = unitData.split("/");
+
+			String name = unitArr[0];
+			int level = Integer.parseInt(unitArr[1]);
+			int maxhp = Integer.parseInt(unitArr[2]);
+			int att = Integer.parseInt(unitArr[3]);
+			int def = Integer.parseInt(unitArr[4]);
+			int exp = Integer.parseInt(unitArr[5]);
+			boolean party = Boolean.parseBoolean(unitArr[6]);
+
+			Unit temp = new Unit(name, level, maxhp, att, def, exp, party);
+			Player.guild.guildList.add(temp);
+
+			// setting item
+			String itemData = this.br.readLine();
+			String itemArr[] = itemData.split("/");
+
+			if (itemArr[0].equals("null"))
+				Player.getGuildList().get(i).setWeapon(null);
+			else {
+				String[] weapon = itemArr[0].split(",");
+				int itemKind = Integer.parseInt(weapon[0]);
+				String itemName = weapon[1];
+				int itemPower = Integer.parseInt(weapon[2]);
+				int itemPrice = Integer.parseInt(weapon[3]);
 				Item item = new Item();
 				item.setItem(itemKind, itemName, itemPower, itemPrice);
-				Player.inven.itemList.add(item);
+				Player.getGuildList().get(i).setWeapon(item);
 			}
 
+			if (itemArr[1].equals("null"))
+				Player.getGuildList().get(i).setArmor(null);
+			else {
+				String[] armor = itemArr[1].split(",");
+				int itemKind = Integer.parseInt(armor[0]);
+				String itemName = armor[1];
+				int itemPower = Integer.parseInt(armor[2]);
+				int itemPrice = Integer.parseInt(armor[3]);
+				Item item = new Item();
+				item.setItem(itemKind, itemName, itemPower, itemPrice);
+				Player.getGuildList().get(i).setArmor(item);
+				;
+			}
+
+			if (itemArr[2].equals("null"))
+				Player.getGuildList().get(i).setRing(null);
+			else {
+				String[] ring = itemArr[2].split(",");
+				int itemKind = Integer.parseInt(ring[0]);
+				String itemName = ring[1];
+				int itemPower = Integer.parseInt(ring[2]);
+				int itemPrice = Integer.parseInt(ring[3]);
+				Item item = new Item();
+				item.setItem(itemKind, itemName, itemPower, itemPrice);
+				Player.getGuildList().get(i).setRing(item);
+			}
 		}
+
+		// inventory item
+		String invenSize = this.br.readLine();
+		System.out.println(invenSize);
+		int inventorySize = Integer.parseInt(invenSize);
+
+		Player.inven.itemList.clear();
+		for (int i = 0; i < inventorySize; i++) {
+			String invenData = this.br.readLine();
+			String[] invenArr = invenData.split("/");
+
+			int itemKind = Integer.parseInt(invenArr[0]);
+			String itemName = invenArr[1];
+			int itemPower = Integer.parseInt(invenArr[2]);
+			int itemPrice = Integer.parseInt(invenArr[3]);
+
+			Item item = new Item();
+			item.setItem(itemKind, itemName, itemPower, itemPrice);
+			Player.inven.itemList.add(item);
+		}
+
+		this.reader.close();
+		this.br.close();
 	}
 
 }

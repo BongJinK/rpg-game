@@ -33,24 +33,35 @@ public class Inventory {
 			int selEquip = MainGame.scan.nextInt();
 			if (selEquip == 0)
 				break;
+
 			selEquip -= 1;
-			if (itemList.get(selEquip).kind == Item.WEAPON) {
-				if (Player.getGuildUnit(selUnit - 1).weapon != null) {
-					itemList.add(Player.getGuildUnit(selUnit - 1).weapon);
+			Item newItem = this.itemList.get(selEquip);
+			int itemCode = this.itemList.get(selEquip).getKind();
+			Unit unit = Player.getGuildUnit(selUnit - 1);
+
+			if (itemCode == Item.WEAPON) {
+				if (unit.getWeapon() != null) {
+					this.itemList.add(unit.getWeapon());
 				}
-				Player.getGuildUnit(selUnit - 1).weapon = itemList.get(selEquip);
-			} else if (itemList.get(selEquip).kind == Item.ARMOR) {
-				if (Player.getGuildUnit(selUnit - 1).armor != null) {
-					itemList.add(Player.getGuildUnit(selUnit - 1).armor);
+				unit.setWeapon(newItem);
+				int att = unit.getAtt() + unit.getWeapon().getPower();
+				Player.guild.guildList.get(selUnit - 1).setAtt(att);
+
+			} else if (itemCode == Item.ARMOR) {
+				if (unit.getArmor() != null) {
+					this.itemList.add(unit.getArmor());
 				}
-				Player.getGuildUnit(selUnit - 1).armor = itemList.get(selEquip);
-			} else if (itemList.get(selEquip).kind == Item.RING) {
-				if (Player.getGuildUnit(selUnit - 1).ring != null) {
-					itemList.add(Player.getGuildUnit(selUnit - 1).ring);
+				unit.setArmor(newItem);
+
+			} else if (itemCode == Item.RING) {
+				if (unit.getRing() != null) {
+					this.itemList.add(unit.getRing());
 				}
-				Player.getGuildUnit(selUnit - 1).ring = itemList.get(selEquip);
+				unit.setRing(newItem);
+				;
+
 			}
-			itemList.remove(selEquip);
+			this.itemList.remove(selEquip);
 		}
 	}
 
@@ -58,9 +69,9 @@ public class Inventory {
 		System.out.println("============ [아이템리스트] ==============");
 		for (int i = 0; i < itemList.size(); i++) {
 			System.out.print("[" + (i + 1) + "번]");
-			System.out.print("[이름 : " + itemList.get(i).name + "]");
-			System.out.print("[능력 : " + itemList.get(i).power + "]");
-			System.out.print("[가격 : " + itemList.get(i).price + "]");
+			System.out.print("[이름 : " + this.itemList.get(i).getName() + "]");
+			System.out.print("[능력 : " + this.itemList.get(i).getPower() + "]");
+			System.out.print("[가격 : " + this.itemList.get(i).getPrice() + "]");
 			System.out.println("");
 		}
 	}
@@ -69,21 +80,24 @@ public class Inventory {
 		while (true) {
 			printItemList();
 			System.out.println("[골드 : " + Player.money + "]");
-			System.out.println("판매할 아이템 번호를 입력하세요. (50 % 세금) [0.뒤로가기]");
+			System.out.println("판매할 아이템 번호를 입력하세요. (50% 수수료)\n[0.뒤로가기]");
 			int selSell = MainGame.scan.nextInt();
-			System.out.println(itemList.get(selSell - 1).name + "을 판매합니다.");
+
+			System.out.println(this.itemList.get(selSell - 1).getName() + "을 판매합니다.");
+
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			Player.money += (itemList.get(selSell - 1).price / 2);
-			itemList.remove(selSell - 1);
+
+			Player.money += (this.itemList.get(selSell - 1).getPrice() / 2);
+			this.itemList.remove(selSell - 1);
 		}
 	}
 
 	public void addItem(Item item) {
-		itemList.add(item);
+		this.itemList.add(item);
 	}
 
 }
