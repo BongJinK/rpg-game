@@ -17,7 +17,7 @@ public class FileData {
 	public FileData() {
 		this.path = "gameData.txt";
 	}
- 
+  
 	public void save() throws IOException {
 		this.fout = new FileWriter(this.path);
 		ArrayList<Unit> temp = Player.getGuildList();

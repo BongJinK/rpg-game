@@ -21,7 +21,7 @@ class MainGame {
 		Player player = new Player();
 		Shop shop = new Shop();
 		FileData fileData = new FileData();
-		
+		 
 		while (true) {
 			printMenu();
 			int sel = scan.nextInt();

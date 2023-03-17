@@ -13,7 +13,7 @@ public class Shop {
 		temp.setPrice(1000);
 		;
 		this.itemList.add(temp);
-
+ 
 		temp = new Item();
 		temp.setKind(Item.WEAPON);
 		temp.setName("철검");

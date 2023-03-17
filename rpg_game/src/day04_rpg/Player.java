@@ -11,7 +11,7 @@ public class Player {
 		money = 100000;
 		guild.setGuild();
 	}
-
+ 
 	public void guildMenu() {
 		guild.guildMenu();
 	}
