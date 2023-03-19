@@ -5,6 +5,8 @@ public class Item {
 	public static final int ARMOR = 2;
 	public static final int RING = 3;
 
+	// shirt, pants, boots, gloves, helmet
+	
 	private int kind;
 	private String name;
 	private int power;

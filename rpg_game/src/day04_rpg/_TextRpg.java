@@ -1,30 +1,49 @@
 package day04_rpg;
 
 import java.io.IOException;
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 
 class MainGame {
-	
+
 	static final int EXIT = 0;
-	
-	static Scanner scan = new Scanner(System.in);
-	static Random ran = new Random();
+
+	public static Scanner scan = new Scanner(System.in);
+	public static Random ran = new Random();
 
 	private void printMenu() {
 		System.out.println("==== [메인메뉴] ====");
 		System.out.println("[1.길드관리]\n[2.상점]\n[3.인벤토리]");
 		System.out.println("[4.저장]\n[5.로드]\n[0.종료]");
+		
+		// 4. 던전 >> 고블린, 오크, 등등 (사냥터)
 	}
-	 
+	
+	private int selectNumber() {
+		int select = -1;
+		while (true) {
+			try {
+				System.out.print("메뉴 : ");
+				select = MainGame.scan.nextInt();
+			} catch (InputMismatchException e) {
+				e.printStackTrace();
+				MainGame.scan.nextLine();
+			}
+			if (select < 0)
+				continue;
+			return select;
+		}
+	}
+
 	public MainGame() {
 		Player player = new Player();
 		Shop shop = new Shop();
 		FileData fileData = new FileData();
-		 
+
 		while (true) {
 			printMenu();
-			int sel = scan.nextInt();
+			int sel = selectNumber();
 
 			if (sel == EXIT) {
 				System.out.println("게임을 종료 합니다.");

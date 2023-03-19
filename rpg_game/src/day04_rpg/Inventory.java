@@ -1,9 +1,24 @@
 package day04_rpg;
-  
+
 import java.util.ArrayList;
 
 public class Inventory {
-	ArrayList<Item> itemList = new ArrayList<>();
+	private ArrayList<Item> itemList = new ArrayList<>();
+	private Player player;
+	private Guild guild;
+
+	public Inventory() {
+		this.player = new Player();
+		this.guild = new Guild();
+	}
+
+	public ArrayList<Item> getItemList() {
+		return this.itemList;
+	}
+
+	public void setItemList(ArrayList<Item> list) {
+		this.itemList = list;
+	}
 
 	public void inventoryMenu() {
 		while (true) {
@@ -12,32 +27,41 @@ public class Inventory {
 			int sel = MainGame.scan.nextInt();
 			if (sel == 0)
 				break;
-			if (sel == 1) {
+			if (sel == 1)
 				equipMenu();
-			}
-			if (sel == 2) {
+			if (sel == 2)
 				sellMenu();
-			}
 		}
 	}
 
 	public void equipMenu() {
-		Player.guild.printAllUnitStaus();
+//		Player player = new Player();
+//		Guild guild = new Guild();
+
+		this.guild.printAllUnitStaus();
 		System.out.println("아이템 착용할 길드원을 선택하세요 ");
 		int selUnit = MainGame.scan.nextInt();
+
 		while (true) {
-			Player.guild.printUnitStaus(selUnit - 1);
-			Player.guild.printUnitItem(selUnit - 1);
+			this.guild.printUnitStaus(selUnit - 1);
+			this.guild.printUnitItem(selUnit - 1);
+
 			printItemList();
-			System.out.println("착용할 아이템 번호를 입력하세요 [0.뒤로가기]");
+			System.out.println("착용할 아이템 번호를 입력하세요.\n[0.뒤로가기]");
+
 			int selEquip = MainGame.scan.nextInt();
+
+			if (selEquip > this.itemList.size()) {
+				System.out.println("착용할 아이템이 없습니다.\n");
+				break;
+			}
 			if (selEquip == 0)
 				break;
 
 			selEquip -= 1;
 			Item newItem = this.itemList.get(selEquip);
 			int itemCode = this.itemList.get(selEquip).getKind();
-			Unit unit = Player.getGuildUnit(selUnit - 1);
+			Unit unit = this.player.getGuildUnit(selUnit - 1);
 
 			if (itemCode == Item.WEAPON) {
 				if (unit.getWeapon() != null) {
@@ -45,45 +69,64 @@ public class Inventory {
 				}
 				unit.setWeapon(newItem);
 				int att = unit.getAtt() + unit.getWeapon().getPower();
-				Player.guild.guildList.get(selUnit - 1).setAtt(att);
+				this.player.getGuildList().get(selUnit - 1).setAtt(att);
+//				Player.guild.guildList.get(selUnit - 1).setAtt(att);
 
 			} else if (itemCode == Item.ARMOR) {
 				if (unit.getArmor() != null) {
 					this.itemList.add(unit.getArmor());
 				}
 				unit.setArmor(newItem);
+				int def = unit.getDef() + unit.getArmor().getPower();
+				this.player.getGuildList().get(selUnit - 1).setDef(def);
 
 			} else if (itemCode == Item.RING) {
 				if (unit.getRing() != null) {
 					this.itemList.add(unit.getRing());
 				}
 				unit.setRing(newItem);
-				;
+				int att = unit.getAtt() + unit.getRing().getPower();
+				this.player.getGuildList().get(selUnit - 1).setAtt(att);
 
 			}
+
 			this.itemList.remove(selEquip);
 		}
 	}
 
 	public void printItemList() {
 		System.out.println("============ [아이템리스트] ==============");
-		for (int i = 0; i < itemList.size(); i++) {
+		for (int i = 0; i < this.itemList.size(); i++) {
 			System.out.print("[" + (i + 1) + "번]");
-			System.out.print("[이름 : " + this.itemList.get(i).getName() + "]");
-			System.out.print("[능력 : " + this.itemList.get(i).getPower() + "]");
-			System.out.print("[가격 : " + this.itemList.get(i).getPrice() + "]");
+			Item item = this.itemList.get(i);
+			System.out.print("[이름 : " + item.getName() + "]");
+			if (item.getKind() == 2)
+				System.out.print("[방어력 : " + item.getPower() + "]");
+			else
+				System.out.print("[공격력 : " + item.getPower() + "]");
+			System.out.print("[가격 : " + item.getPrice() + "]");
 			System.out.println("");
 		}
 	}
 
 	public void sellMenu() {
+//		Player player = new Player();
 		while (true) {
 			printItemList();
-			System.out.println("[골드 : " + Player.money + "]");
-			System.out.println("판매할 아이템 번호를 입력하세요. (50% 수수료)\n[0.뒤로가기]");
-			int selSell = MainGame.scan.nextInt();
+			System.out.println("[골드 : " + this.player.getMoney() + "]");
 
-			System.out.println(this.itemList.get(selSell - 1).getName() + "을 판매합니다.");
+			System.out.println("판매할 아이템 번호를 입력하세요. (50% 수수료)\n[0.뒤로가기]");
+			int selItemNum = MainGame.scan.nextInt();
+
+			if (selItemNum >= this.itemList.size()) {
+				System.out.println("판매할 아이템이 없습니다.\n");
+				break;
+			}
+			if (selItemNum == 0)
+				break;
+
+			String sellItemName = this.itemList.get(selItemNum - 1).getName();
+			System.out.printf("%s을 판매합니다.\n", sellItemName);
 
 			try {
 				Thread.sleep(1000);
@@ -91,8 +134,11 @@ public class Inventory {
 				e.printStackTrace();
 			}
 
-			Player.money += (this.itemList.get(selSell - 1).getPrice() / 2);
-			this.itemList.remove(selSell - 1);
+			int cost = this.itemList.get(selItemNum - 1).getPrice();
+			int saleProceeds = cost / 2;
+			this.player.setMoney(this.player.getMoney() + saleProceeds);
+//			Player.money += (this.itemList.get(selItemNum - 1).getPrice() / 2);
+			this.itemList.remove(selItemNum - 1);
 		}
 	}
 
@@ -100,4 +146,20 @@ public class Inventory {
 		this.itemList.add(item);
 	}
 
+	// 아래 메소드 사용 유무 확인
+	public void deleteItem(Item deleteItem) {
+		int index = IndexOf(deleteItem);
+		if (index != -1)
+			this.itemList.remove(index);
+	}
+
+	public int IndexOf(Item deleteItem) {
+		int index = -1;
+		for (int i = 0; i < this.itemList.size(); i++) {
+			Item item = this.itemList.get(i);
+			if (item.getName().equals(deleteItem.getName()))
+				return i;
+		}
+		return index;
+	}
 }
