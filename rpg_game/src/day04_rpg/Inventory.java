@@ -4,13 +4,6 @@ import java.util.ArrayList;
 
 public class Inventory {
 	private ArrayList<Item> itemList = new ArrayList<>();
-	private Player player;
-	private Guild guild;
-
-	public Inventory() {
-		this.player = new Player();
-		this.guild = new Guild();
-	}
 
 	public ArrayList<Item> getItemList() {
 		return this.itemList;
@@ -35,16 +28,20 @@ public class Inventory {
 	}
 
 	public void equipMenu() {
-//		Player player = new Player();
-//		Guild guild = new Guild();
+		Player.getGuild().printAllUnitStaus();
 
-		this.guild.printAllUnitStaus();
 		System.out.println("아이템 착용할 길드원을 선택하세요 ");
 		int selUnit = MainGame.scan.nextInt();
 
+		// 여기 수정
+		if (selUnit < 1 || selUnit > Player.getGuildList().size()) {
+			System.err.println("올바르지 않은 선택입니다.");
+			return;
+		}
+
 		while (true) {
-			this.guild.printUnitStaus(selUnit - 1);
-			this.guild.printUnitItem(selUnit - 1);
+			Player.getGuild().printUnitStaus(selUnit - 1);
+			Player.getGuild().printUnitItem(selUnit - 1);
 
 			printItemList();
 			System.out.println("착용할 아이템 번호를 입력하세요.\n[0.뒤로가기]");
@@ -61,7 +58,7 @@ public class Inventory {
 			selEquip -= 1;
 			Item newItem = this.itemList.get(selEquip);
 			int itemCode = this.itemList.get(selEquip).getKind();
-			Unit unit = this.player.getGuildUnit(selUnit - 1);
+			Unit unit = Player.getGuildUnit(selUnit - 1);
 
 			if (itemCode == Item.WEAPON) {
 				if (unit.getWeapon() != null) {
@@ -69,7 +66,7 @@ public class Inventory {
 				}
 				unit.setWeapon(newItem);
 				int att = unit.getAtt() + unit.getWeapon().getPower();
-				this.player.getGuildList().get(selUnit - 1).setAtt(att);
+				Player.getGuildList().get(selUnit - 1).setAtt(att);
 //				Player.guild.guildList.get(selUnit - 1).setAtt(att);
 
 			} else if (itemCode == Item.ARMOR) {
@@ -78,7 +75,7 @@ public class Inventory {
 				}
 				unit.setArmor(newItem);
 				int def = unit.getDef() + unit.getArmor().getPower();
-				this.player.getGuildList().get(selUnit - 1).setDef(def);
+				Player.getGuildList().get(selUnit - 1).setDef(def);
 
 			} else if (itemCode == Item.RING) {
 				if (unit.getRing() != null) {
@@ -86,7 +83,7 @@ public class Inventory {
 				}
 				unit.setRing(newItem);
 				int att = unit.getAtt() + unit.getRing().getPower();
-				this.player.getGuildList().get(selUnit - 1).setAtt(att);
+				Player.getGuildList().get(selUnit - 1).setAtt(att);
 
 			}
 
@@ -110,10 +107,9 @@ public class Inventory {
 	}
 
 	public void sellMenu() {
-//		Player player = new Player();
 		while (true) {
 			printItemList();
-			System.out.println("[골드 : " + this.player.getMoney() + "]");
+			System.out.println("[골드 : " + Player.getMoney() + "]");
 
 			System.out.println("판매할 아이템 번호를 입력하세요. (50% 수수료)\n[0.뒤로가기]");
 			int selItemNum = MainGame.scan.nextInt();
@@ -136,7 +132,7 @@ public class Inventory {
 
 			int cost = this.itemList.get(selItemNum - 1).getPrice();
 			int saleProceeds = cost / 2;
-			this.player.setMoney(this.player.getMoney() + saleProceeds);
+			Player.setMoney(Player.getMoney() + saleProceeds);
 //			Player.money += (this.itemList.get(selItemNum - 1).getPrice() / 2);
 			this.itemList.remove(selItemNum - 1);
 		}

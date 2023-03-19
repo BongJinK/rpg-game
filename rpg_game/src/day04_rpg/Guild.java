@@ -9,7 +9,7 @@ public class Guild {
 	private ArrayList<Unit> partyList = new ArrayList<>();
 //	Unit[] partyList;
 
-	public Guild() {
+	public void setGuild() {
 		// name, level, hp = maxhp, att, def, exp
 		Unit standatdUnit = new Unit("이성계", 1, 200, 25, 10, 0);
 		this.guildList.add(standatdUnit);
@@ -38,9 +38,8 @@ public class Guild {
 	}
 
 	public void printAllUnitStaus() {
-		Player player = new Player();
 		System.out.println("=========================================");
-		System.out.printf("[골드 : %d Gold]\n", player.getMoney());
+		System.out.printf("[골드 : %d Gold]\n", Player.getMoney());
 		System.out.println("================ [길드원] ================");
 		for (int i = 0; i < this.guildList.size(); i++) {
 			System.out.printf("[%d 번]\n", i + 1);
@@ -56,8 +55,7 @@ public class Guild {
 	}
 
 	private void buyUnit() {
-		Player player = new Player();
-		if (player.getMoney() < 5000)
+		if (Player.getMoney() < 5000)
 			return;
 		String[] n1 = { "이", "김", "김", "최", "장", "김", "척" };
 		String[] n2 = { "순", "시", "유", "무", "보", "좌", "준" };
@@ -89,8 +87,10 @@ public class Guild {
 		}
 
 		this.guildList.add(temp);
-		player.setGuildList(this.guildList);
-		player.setMoney(player.getMoney() - 5000);
+		for(Unit i : this.guildList)
+			System.out.println(i.getName());
+		Player.setGuildList(this.guildList);
+		Player.setMoney(Player.getMoney() - 5000);
 	}
 
 	private void removeUnit() {
@@ -228,7 +228,7 @@ public class Guild {
 	public ArrayList<Unit> getGuildList() {
 		return this.guildList;
 	}
-	
+
 	public void setGuildList(ArrayList<Unit> list) {
 		this.guildList = list;
 	}

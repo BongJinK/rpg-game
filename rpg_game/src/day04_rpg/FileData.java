@@ -20,12 +20,11 @@ public class FileData {
 
 	public void save() throws IOException {
 		this.fout = new FileWriter(this.path);
-		Player player = new Player();
 
-		ArrayList<Unit> temp = player.getGuildList();
+		ArrayList<Unit> temp = Player.getGuildList();
 //		ArrayList<Unit> temp = Player.getGuildList();
 		String gameData = "";
-		gameData += player.getMoney() + "\r\n";
+		gameData += Player.getMoney() + "\r\n";
 		gameData += temp.size() + "\r\n";
 
 		// name, level, hp = maxhp, att, def, exp
@@ -82,10 +81,10 @@ public class FileData {
 
 		// inventory
 
-		gameData += player.getItemSize();
+		gameData += Player.getItemSize();
 		gameData += "\r\n";
-		for (int i = 0; i < player.getItemSize(); i++) {
-			Item item = player.getItemList().get(i);
+		for (int i = 0; i < Player.getItemSize(); i++) {
+			Item item = Player.getItemList().get(i);
 
 			gameData += item.getKind() + "/";
 			gameData += item.getName() + "/";
@@ -112,15 +111,14 @@ public class FileData {
 		this.reader = new FileReader(this.path);
 		this.br = new BufferedReader(this.reader);
 
-		Player player = new Player();
 		String money = this.br.readLine();
-		player.setMoney(Integer.parseInt(money));
+		Player.setMoney(Integer.parseInt(money));
 //		Player.money = Integer.parseInt(money);
-		System.out.println(player.getMoney());
+		System.out.println(Player.getMoney());
 
 		String guildSize = this.br.readLine();
 		int size = Integer.parseInt(guildSize);
-		player.getItemList().clear();
+		Player.getItemList().clear();
 //		Player.guild.guildList.clear();
 		System.out.println(size);
 
@@ -137,7 +135,7 @@ public class FileData {
 			boolean party = Boolean.parseBoolean(unitArr[6]);
 
 			Unit temp = new Unit(name, level, maxhp, att, def, exp, party);
-			player.getGuildList().add(temp);
+			Player.getGuildList().add(temp);
 //			Player.guild.guildList.add(temp);
 
 			// setting item
@@ -145,7 +143,7 @@ public class FileData {
 			String itemArr[] = itemData.split("/");
 
 			if (itemArr[0].equals("null"))
-				player.getGuildList().get(i).setWeapon(null);
+				Player.getGuildList().get(i).setWeapon(null);
 //				Player.getGuildList().get(i).setWeapon(null);
 			else {
 				String[] weapon = itemArr[0].split(",");
@@ -157,11 +155,11 @@ public class FileData {
 				Item item = new Item();
 				item.setItem(itemKind, itemName, itemPower, itemPrice);
 //				Player.getGuildList().get(i).setWeapon(item);
-				player.getGuildList().get(i).setWeapon(item);
+				Player.getGuildList().get(i).setWeapon(item);
 			}
 
 			if (itemArr[1].equals("null"))
-				player.getGuildList().get(i).setArmor(null);
+				Player.getGuildList().get(i).setArmor(null);
 //				Player.getGuildList().get(i).setArmor(null);
 			else {
 				String[] armor = itemArr[1].split(",");
@@ -173,11 +171,11 @@ public class FileData {
 				Item item = new Item();
 				item.setItem(itemKind, itemName, itemPower, itemPrice);
 //				Player.getGuildList().get(i).setArmor(item);
-				player.getGuildList().get(i).setArmor(item);
+				Player.getGuildList().get(i).setArmor(item);
 			}
 
 			if (itemArr[2].equals("null"))
-				player.getGuildList().get(i).setRing(null);
+				Player.getGuildList().get(i).setRing(null);
 //				Player.getGuildList().get(i).setRing(null);
 			else {
 				String[] ring = itemArr[2].split(",");
@@ -189,7 +187,7 @@ public class FileData {
 				Item item = new Item();
 				item.setItem(itemKind, itemName, itemPower, itemPrice);
 //				Player.getGuildList().get(i).setRing(item);
-				player.getGuildList().get(i).setRing(item);
+				Player.getGuildList().get(i).setRing(item);
 			}
 		}
 
@@ -198,7 +196,7 @@ public class FileData {
 		System.out.println(invenSize);
 		int inventorySize = Integer.parseInt(invenSize);
 
-		player.getItemList().clear();
+		Player.getItemList().clear();
 //		Player.inven.itemList.clear();
 
 		for (int i = 0; i < inventorySize; i++) {
@@ -213,7 +211,7 @@ public class FileData {
 			Item item = new Item();
 			item.setItem(itemKind, itemName, itemPower, itemPrice);
 //			Player.inven.itemList.add(item);
-			player.getItemList().add(item);
+			Player.getItemList().add(item);
 		}
 
 		this.reader.close();

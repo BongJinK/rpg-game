@@ -4,62 +4,67 @@ import java.util.ArrayList;
 
 public class Player {
 
-	private int money;
-	private Guild guild;
-	private Inventory inven;
+	private static int money;
+	private static Guild guild;
+	private static Inventory inven;
 
 //	static Guild guild = new Guild();
 //	static Inventory inven = new Inventory();
 
 	public Player() {
-		this.money = 100000;
-		this.guild = new Guild();
-		this.inven = new Inventory();
+		money = 100000;
+		guild = new Guild();
+		guild.setGuild();
+		inven = new Inventory();
 	}
 
 	public void guildMenu() {
-		this.guild.guildMenu();
+		guild.guildMenu();
 	}
 
 	public void inventoryMenu() {
-		this.inven.inventoryMenu();
+		inven.inventoryMenu();
 	}
 
-	public ArrayList<Unit> getGuildList() {
-		return this.guild.getGuildList();
-	}
-	
-	public void setGuildList(ArrayList<Unit> list) {
-		this.guild.setGuildList(list);
-	}
-	
-	public ArrayList<Item> getItemList() {
-		return this.inven.getItemList();
+	public static ArrayList<Unit> getGuildList() {
+		return guild.getGuildList();
 	}
 
-	public void setItemList(ArrayList<Item> list) {
-		this.inven.setItemList(list);
+	public static void setGuildList(ArrayList<Unit> list) {
+		guild.setGuildList(list);
 	}
 
-	public Unit getGuildUnit(int num) {
-		return this.guild.getGuildUnit(num);
+	public static ArrayList<Item> getItemList() {
+		return inven.getItemList();
 	}
 
-	public int getGuildSize() {
-		return this.guild.getGuildList().size();
+	public static void setItemList(ArrayList<Item> list) {
+		inven.setItemList(list);
 	}
 
-	public int getItemSize() {
-		return this.inven.getItemList().size();
+	public static Unit getGuildUnit(int num) {
+		return guild.getGuildUnit(num);
+	}
+
+	public static int getGuildSize() {
+		return guild.getGuildList().size();
+	}
+
+	public static int getItemSize() {
+		return inven.getItemList().size();
 //		return this.inven.itemList.size();
 	}
 
-	public int getMoney() {
-		return this.money;
+	public static Guild getGuild() {
+		return guild;
 	}
 
-	public void setMoney(int money) {
-		this.money = money;
+	public static int getMoney() {
+		return money;
+	}
+
+	public static void setMoney(int money) {
+		Player.money = money;
 	}
 
 //	public void guildMenu() {

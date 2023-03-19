@@ -4,10 +4,8 @@ import java.util.ArrayList;
 
 public class Shop {
 	private ArrayList<Item> itemList = new ArrayList<>();
-	private Player player;
 
 	public Shop() {
-		this.player = new Player();
 		Item temp = new Item();
 
 		temp.setKind(Item.WEAPON);
@@ -102,7 +100,7 @@ public class Shop {
 
 			printItems(selectItemOfKind);
 
-			System.out.printf("[골드 : %dGold]\n", this.player.getMoney());
+			System.out.printf("[골드 : %dGold]\n", Player.getMoney());
 			System.out.println("구입할 아이템 번호를 입력하세요 [0.뒤로가기]");
 			int selNum = MainGame.scan.nextInt();
 			if (selNum == 0)
@@ -116,14 +114,12 @@ public class Shop {
 
 				count += 1;
 				if (count == selNum) {
-					ArrayList<Item> inventory = this.player.getItemList();
+					ArrayList<Item> inventory = Player.getItemList();
 					inventory.add(item);
-//					Player.inven.addItem(itemList.get(i));
-					this.player.setItemList(inventory);
+					Player.setItemList(inventory);
 
 					int itemPrice = item.getPrice();
-					this.player.setMoney(this.player.getMoney() - itemPrice);
-//					Player.money -= itemList.get(i).getPrice();
+					Player.setMoney(Player.getMoney() - itemPrice);
 
 					System.out.printf("[%s]을(를) 구입했습니다.\n", item.getName());
 
