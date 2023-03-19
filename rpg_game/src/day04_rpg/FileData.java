@@ -122,6 +122,7 @@ public class FileData {
 //		Player.guild.guildList.clear();
 		System.out.println(size);
 
+		Player.getGuildList().clear();
 		for (int i = 0; i < size; i++) {
 			String unitData = br.readLine();
 			String[] unitArr = unitData.split("/");
