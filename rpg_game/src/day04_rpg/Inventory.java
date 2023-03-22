@@ -96,10 +96,12 @@ public class Inventory {
 			System.out.print("[" + (i + 1) + "번]");
 			Item item = this.itemList.get(i);
 			System.out.print("[이름 : " + item.getName() + "]");
-			if (item.getKind() == 2)
-				System.out.print("[방어력 : " + item.getPower() + "]");
-			else
+			if (item.getKind() == 1)
 				System.out.print("[공격력 : " + item.getPower() + "]");
+			else if(item.getKind() == 2)
+				System.out.print("[방어력 : " + item.getPower() + "]");
+			else if(item.getKind() == 3)
+				System.out.print("[체력 : " + item.getPower() + "]");
 			System.out.print("[가격 : " + item.getPrice() + "]");
 			System.out.println("");
 		}

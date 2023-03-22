@@ -143,11 +143,13 @@ public class Shop {
 				continue;
 			System.out.printf("[%d번]\n", count + 1);
 			System.out.printf("[이름 : %s]\n", item.getName());
-			if (item.getKind() == 2)
-				System.out.printf("[방어력 : +%d]\n", item.getPower());
-			else
-				System.out.printf("[공격력 : +%d]\n", item.getPower());
-			System.out.printf("[가격 : %d]\n", item.getPrice());
+			if (item.getKind() == 1)
+				System.out.print("[공격력 : " + item.getPower() + "]");
+			else if(item.getKind() == 2)
+				System.out.print("[방어력 : " + item.getPower() + "]");
+			else if(item.getKind() == 3)
+				System.out.print("[체력 : " + item.getPower() + "]");
+			System.out.printf(" [가격 : %d]\n", item.getPrice());
 			System.out.println("");
 			count += 1;
 		}
