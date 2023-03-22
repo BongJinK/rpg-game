@@ -94,7 +94,7 @@ public class Shop {
 			if (selectItemOfKind == Item.WEAPON)
 				System.out.println("=========== [무기] ============");
 			else if (selectItemOfKind == Item.ARMOR)
-				System.out.println("=========== [방어구] ============");
+				System.out.println("============ [방어구] ============");
 			else if (selectItemOfKind == Item.RING)
 				System.out.println("=========== [반지] ============");
 
@@ -145,9 +145,9 @@ public class Shop {
 			System.out.printf("[이름 : %s]\n", item.getName());
 			if (item.getKind() == 1)
 				System.out.print("[공격력 : " + item.getPower() + "]");
-			else if(item.getKind() == 2)
+			else if (item.getKind() == 2)
 				System.out.print("[방어력 : " + item.getPower() + "]");
-			else if(item.getKind() == 3)
+			else if (item.getKind() == 3)
 				System.out.print("[체력 : " + item.getPower() + "]");
 			System.out.printf(" [가격 : %d]\n", item.getPrice());
 			System.out.println("");

@@ -113,12 +113,12 @@ public class Inventory {
 	public void sellMenu() {
 		while (true) {
 			printItemList();
-			System.out.println("[골드 : " + Player.getMoney() + "]");
+			System.out.printf("[골드 : %d]\n", Player.getMoney());
 
 			String message = "판매할 아이템 번호를 입력하세요. (50% 수수료)\n[0.뒤로가기]";
 			int selItemNum = MainGame.selectNumber(message);
 
-			if (selItemNum >= this.itemList.size()) {
+			if (selItemNum > this.itemList.size()) {
 				System.out.println("판매할 아이템이 없습니다.\n");
 				break;
 			}

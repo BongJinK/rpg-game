@@ -8,9 +8,6 @@ public class Player {
 	private static Guild guild;
 	private static Inventory inven;
 
-//	static Guild guild = new Guild();
-//	static Inventory inven = new Inventory();
-
 	public Player() {
 		money = 100000;
 		guild = new Guild();
@@ -52,7 +49,6 @@ public class Player {
 
 	public static int getItemSize() {
 		return inven.getItemList().size();
-//		return this.inven.itemList.size();
 	}
 
 	public static Guild getGuild() {

@@ -18,6 +18,7 @@ class MainGame {
 		System.out.println("[4.저장]\n[5.로드]\n[0.종료]");
 
 		// 4. 던전 >> 고블린, 오크, 등등 (사냥터)
+		// ㄴ 몬스터 클래스
 	}
 
 	public static int selectNumber(String message) {
