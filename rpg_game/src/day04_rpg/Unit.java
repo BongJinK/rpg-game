@@ -12,6 +12,7 @@ public class Unit {
 	private Item weapon;
 	private Item armor;
 	private Item ring;
+	// 기본 공격력 추가?
 
 	public Unit(String n, int l, int h, int a, int d, int e) {
 		this.name = n;
@@ -54,32 +55,29 @@ public class Unit {
 		if (this.ring == null)
 			System.out.printf("[체력 : %s", this.hp);
 		else {
-			int hp = this.hp + this.ring.getPower();
-			System.out.printf("[체력 : %s", hp);
+			int ringHp = this.getRing().getPower();
+			System.out.printf("[체력 : %s", this.hp + ringHp);
 		}
 
 		if (this.ring == null)
-			System.out.printf(" / %d(%d+0)]\n", this.maxHp, this.maxHp);
+			System.out.printf(" / %d]\n", this.maxHp);
 		else {
-			int maxhp = this.maxHp + this.ring.getPower();
-			System.out.printf(" / %d", maxhp);
-			System.out.printf("(%d+%d)]\n", this.maxHp, this.ring.getPower());
+			int ringHp = this.getRing().getPower();
+			System.out.printf(" / %d]\n", this.maxHp + ringHp);
 		}
 
 		if (this.weapon == null)
-			System.out.printf("[공격력 : %d(%d+0)]\n", this.att, this.att);
+			System.out.printf("[공격력 : %d]\n", this.att);
 		else {
-			int att = this.att + this.ring.getPower();
-			System.out.printf("[공격력 : %d", att);
-			System.out.printf("(%d+%d)]\n", this.att, this.weapon.getPower());
+			int weaponAtt = this.getWeapon().getPower();
+			System.out.printf("[공격력 : %d]\n", this.att + weaponAtt);
 		}
 
 		if (this.armor == null)
-			System.out.printf("[방어력 : %d(%d+0)]\n", this.def, this.def);
+			System.out.printf("[방어력 : %d]\n", this.def);
 		else {
-			int def = this.def = this.armor.getPower();
-			System.out.printf("[방어력 : %d", def);
-			System.out.printf("(%d+%d)]\n", this.def, this.armor.getPower());
+			int armorDef = this.getArmor().getPower();
+			System.out.printf("[방어력 : %d", this.def + armorDef);
 		}
 
 		System.out.printf("[파티중 : %s]\n", this.party);

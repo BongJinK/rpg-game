@@ -33,7 +33,6 @@ public class Inventory {
 		System.out.println("아이템 착용할 길드원을 선택하세요 ");
 		int selUnit = MainGame.scan.nextInt();
 
-		// 여기 수정
 		if (selUnit < 1 || selUnit > Player.getGuildList().size()) {
 			System.err.println("올바르지 않은 선택입니다.");
 			return;
@@ -63,30 +62,30 @@ public class Inventory {
 			if (itemCode == Item.WEAPON) {
 				if (unit.getWeapon() != null) {
 					this.itemList.add(unit.getWeapon());
+//					int att = unit.getAtt() - unit.getWeapon().getPower();
+//					Player.getGuildList().get(selUnit - 1).setAtt(att);
 				}
 				unit.setWeapon(newItem);
-				int att = unit.getAtt() + unit.getWeapon().getPower();
-				Player.getGuildList().get(selUnit - 1).setAtt(att);
-//				Player.guild.guildList.get(selUnit - 1).setAtt(att);
+//				int att = unit.getAtt() + unit.getWeapon().getPower();
+//				Player.getGuildList().get(selUnit - 1).setAtt(att);
 
 			} else if (itemCode == Item.ARMOR) {
 				if (unit.getArmor() != null) {
 					this.itemList.add(unit.getArmor());
 				}
 				unit.setArmor(newItem);
-				int def = unit.getDef() + unit.getArmor().getPower();
-				Player.getGuildList().get(selUnit - 1).setDef(def);
+//				int def = unit.getDef() + unit.getArmor().getPower();
+//				Player.getGuildList().get(selUnit - 1).setDef(def);
 
 			} else if (itemCode == Item.RING) {
 				if (unit.getRing() != null) {
 					this.itemList.add(unit.getRing());
 				}
 				unit.setRing(newItem);
-				int att = unit.getAtt() + unit.getRing().getPower();
-				Player.getGuildList().get(selUnit - 1).setAtt(att);
+//				int att = unit.getAtt() + unit.getRing().getPower();
+//				Player.getGuildList().get(selUnit - 1).setAtt(att);
 
 			}
-
 			this.itemList.remove(selEquip);
 		}
 	}
@@ -133,7 +132,6 @@ public class Inventory {
 			int cost = this.itemList.get(selItemNum - 1).getPrice();
 			int saleProceeds = cost / 2;
 			Player.setMoney(Player.getMoney() + saleProceeds);
-//			Player.money += (this.itemList.get(selItemNum - 1).getPrice() / 2);
 			this.itemList.remove(selItemNum - 1);
 		}
 	}
@@ -143,19 +141,19 @@ public class Inventory {
 	}
 
 	// 아래 메소드 사용 유무 확인
-	public void deleteItem(Item deleteItem) {
-		int index = IndexOf(deleteItem);
-		if (index != -1)
-			this.itemList.remove(index);
-	}
-
-	public int IndexOf(Item deleteItem) {
-		int index = -1;
-		for (int i = 0; i < this.itemList.size(); i++) {
-			Item item = this.itemList.get(i);
-			if (item.getName().equals(deleteItem.getName()))
-				return i;
-		}
-		return index;
-	}
+//	public void deleteItem(Item deleteItem) {
+//		int index = IndexOf(deleteItem);
+//		if (index != -1)
+//			this.itemList.remove(index);
+//	}
+//
+//	public int IndexOf(Item deleteItem) {
+//		int index = -1;
+//		for (int i = 0; i < this.itemList.size(); i++) {
+//			Item item = this.itemList.get(i);
+//			if (item.getName().equals(deleteItem.getName()))
+//				return i;
+//		}
+//		return index;
+//	}
 }

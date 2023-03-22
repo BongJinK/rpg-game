@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 class MainGame {
 
-	static final int EXIT = 0;
+	public static final int EXIT = 0;
 
 	public static Scanner scan = new Scanner(System.in);
 	public static Random ran = new Random();
@@ -16,10 +16,10 @@ class MainGame {
 		System.out.println("==== [메인메뉴] ====");
 		System.out.println("[1.길드관리]\n[2.상점]\n[3.인벤토리]");
 		System.out.println("[4.저장]\n[5.로드]\n[0.종료]");
-		
+
 		// 4. 던전 >> 고블린, 오크, 등등 (사냥터)
 	}
-	
+
 	private int selectNumber() {
 		int select = -1;
 		while (true) {
