@@ -17,21 +17,21 @@ public class Inventory {
 		while (true) {
 			System.out.println("============ [인벤메뉴] =============");
 			System.out.println("[1.착용] [2.판매] [0.뒤로가기]");
-			int sel = MainGame.scan.nextInt();
+			int sel = MainGame.selectNumber("메뉴");
 			if (sel == 0)
 				break;
 			if (sel == 1)
 				equipMenu();
 			if (sel == 2)
 				sellMenu();
+			// 장비 착용 해제
 		}
 	}
 
 	public void equipMenu() {
 		Player.getGuild().printAllUnitStaus();
 
-		System.out.println("아이템 착용할 길드원을 선택하세요 ");
-		int selUnit = MainGame.scan.nextInt();
+		int selUnit = MainGame.selectNumber("아이템 착용할 길드원을 선택하세요 ");
 
 		if (selUnit < 1 || selUnit > Player.getGuildList().size()) {
 			System.err.println("올바르지 않은 선택입니다.");
@@ -39,13 +39,16 @@ public class Inventory {
 		}
 
 		while (true) {
+			System.out.println("point 1");
+
 			Player.getGuild().printUnitStaus(selUnit - 1);
 			Player.getGuild().printUnitItem(selUnit - 1);
 
-			printItemList();
-			System.out.println("착용할 아이템 번호를 입력하세요.\n[0.뒤로가기]");
+			System.out.println("point 2");
 
-			int selEquip = MainGame.scan.nextInt();
+			printItemList();
+			String message = "착용할 아이템 번호를 입력하세요.\n[0.뒤로가기]";
+			int selEquip = MainGame.selectNumber(message);
 
 			if (selEquip > this.itemList.size()) {
 				System.out.println("착용할 아이템이 없습니다.\n");
@@ -98,9 +101,9 @@ public class Inventory {
 			System.out.print("[이름 : " + item.getName() + "]");
 			if (item.getKind() == 1)
 				System.out.print("[공격력 : " + item.getPower() + "]");
-			else if(item.getKind() == 2)
+			else if (item.getKind() == 2)
 				System.out.print("[방어력 : " + item.getPower() + "]");
-			else if(item.getKind() == 3)
+			else if (item.getKind() == 3)
 				System.out.print("[체력 : " + item.getPower() + "]");
 			System.out.print("[가격 : " + item.getPrice() + "]");
 			System.out.println("");
@@ -112,8 +115,8 @@ public class Inventory {
 			printItemList();
 			System.out.println("[골드 : " + Player.getMoney() + "]");
 
-			System.out.println("판매할 아이템 번호를 입력하세요. (50% 수수료)\n[0.뒤로가기]");
-			int selItemNum = MainGame.scan.nextInt();
+			String message = "판매할 아이템 번호를 입력하세요. (50% 수수료)\n[0.뒤로가기]";
+			int selItemNum = MainGame.selectNumber(message);
 
 			if (selItemNum >= this.itemList.size()) {
 				System.out.println("판매할 아이템이 없습니다.\n");

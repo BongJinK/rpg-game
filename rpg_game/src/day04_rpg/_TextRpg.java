@@ -20,11 +20,11 @@ class MainGame {
 		// 4. 던전 >> 고블린, 오크, 등등 (사냥터)
 	}
 
-	private int selectNumber() {
+	public static int selectNumber(String message) {
 		int select = -1;
 		while (true) {
 			try {
-				System.out.print("메뉴 : ");
+				System.out.printf("%s : ", message);
 				select = MainGame.scan.nextInt();
 			} catch (InputMismatchException e) {
 				e.printStackTrace();
@@ -43,7 +43,7 @@ class MainGame {
 
 		while (true) {
 			printMenu();
-			int sel = selectNumber();
+			int sel = selectNumber("메뉴");
 
 			if (sel == EXIT) {
 				System.out.println("게임을 종료 합니다.");

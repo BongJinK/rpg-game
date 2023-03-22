@@ -1,7 +1,6 @@
 package day04_rpg;
 
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 
 public class Guild {
 	public final int PARTY_SIZE = 6;
@@ -12,22 +11,6 @@ public class Guild {
 		// name, level, hp = maxhp, att, def, exp
 		Unit standatdUnit = new Unit("이성계", 1, 200, 25, 10, 0);
 		this.guildList.add(standatdUnit);
-	}
-
-	private int selectNumber(String message) {
-		int select = -1;
-		while (true) {
-			try {
-				System.out.printf("%s : ", message);
-				select = MainGame.scan.nextInt();
-			} catch (InputMismatchException e) {
-				e.printStackTrace();
-				MainGame.scan.nextLine();
-			}
-			if (select < 0)
-				continue;
-			return select;
-		}
 	}
 
 	private void printGuildMenu() {
@@ -94,7 +77,7 @@ public class Guild {
 
 	private void removeUnit() {
 		printAllUnitStaus();
-		int sel = selectNumber("삭제할 번호를 입력하세요.");
+		int sel = MainGame.selectNumber("삭제할 번호를 입력하세요.");
 
 		if (this.guildList.get(sel - 1).isParty()) {
 			System.out.println("파티중인 멤버는 삭제할수 없습니다.");
@@ -138,7 +121,7 @@ public class Guild {
 			System.out.println("1. 파티 목록\n2. 파티원 추가");
 			System.out.println("3. 파티원 추방\n0. 뒤로가기");
 
-			int select = selectNumber("메뉴");
+			int select = MainGame.selectNumber("메뉴");
 
 			if (select == MainGame.EXIT)
 				break;
@@ -186,7 +169,7 @@ public class Guild {
 
 	private int changeMemberNumber(String message) {
 		while (true) {
-			int number = selectNumber(message);
+			int number = MainGame.selectNumber(message);
 			if (number > this.guildList.size() || number < 1)
 				continue;
 			return number;
@@ -196,7 +179,7 @@ public class Guild {
 	private void sortRun() {
 		while (true) {
 			System.out.println("1. 길드정렬\n2. 파티정렬\n0. 뒤로가기");
-			int select = selectNumber("메뉴");
+			int select = MainGame.selectNumber("메뉴");
 
 			if (select == MainGame.EXIT)
 				break;
@@ -212,7 +195,7 @@ public class Guild {
 		while (true) {
 			System.out.println("1. 이름순\n2. 레벨순\n3. 공격력순");
 			System.out.println("4. 파티가입 유무\n0. 뒤로가기");
-			int select = selectNumber("메뉴");
+			int select = MainGame.selectNumber("메뉴");
 
 			if (select == MainGame.EXIT)
 				break;
@@ -321,7 +304,7 @@ public class Guild {
 		while (true) {
 			System.out.println("1. 이름순\n2. 레벨순\n3. 공격력순");
 			System.out.println("0. 뒤로가기");
-			int select = selectNumber("메뉴");
+			int select = MainGame.selectNumber("메뉴");
 
 			if (select == MainGame.EXIT)
 				break;
